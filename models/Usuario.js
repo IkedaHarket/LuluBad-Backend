@@ -1,3 +1,7 @@
+/*
+    User Template
+*/
+
 const {Schema, model} = require('mongoose');
 
 const UsuarioSchema = Schema({
@@ -31,7 +35,16 @@ const UsuarioSchema = Schema({
     admin:{
         type:Boolean,
         default:false
-    }
+    },
+    estado:{
+        type:Boolean,
+        default:false
+    },
+    googleAuth:{
+        type:Boolean,
+        default:false,
+    },
+    created_at: { type: Date, required: true, default: Date.now }
 });
 
 UsuarioSchema.methods.toJSON = function(){

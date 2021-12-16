@@ -36,7 +36,7 @@ class Server{
     }
 
     routes(){//Configurar cada path a su ruta correspondiente
-        
+        this.app.use(this.paths.auth,       require('../routes/auth'));
     }
 
     listen(){//Escucha
