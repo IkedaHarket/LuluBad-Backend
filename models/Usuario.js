@@ -38,7 +38,7 @@ const UsuarioSchema = Schema({
     },
     estado:{
         type:Boolean,
-        default:false
+        default:true
     },
     googleAuth:{
         type:Boolean,

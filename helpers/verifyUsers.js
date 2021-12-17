@@ -13,9 +13,15 @@ const verificarCorreoUsuario = async(correo)=>{
         throw new Error(`Este correo ya se encuentra registrado`);
     }
 }
-
+const verifyUserId = async(id) =>{
+    const userId = await Usuario.findById(id);
+    if(!userId){
+        throw new Error(`El id ${id} no existe`);
+    }
+}
 
 
 module.exports = {
     verificarCorreoUsuario,
+    verifyUserId,
 }

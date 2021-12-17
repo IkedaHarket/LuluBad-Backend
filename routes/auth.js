@@ -1,11 +1,11 @@
 const {Router} = require('express');
-const { check } = require('express-validator');
+const { param, check } = require('express-validator');
 
-const { register } = require('../controllers/auth');
-const { verificarCorreoUsuario } = require('../helpers/verifyUsers');
+const { register,login,banearUsuario } = require('../controllers/auth');
+const { verificarCorreoUsuario,verifyUserId } = require('../helpers/verifyUsers');
 const {validarCampos} = require('../middlewares/validarCampos');
 
-// const { validarJWT } = require('../middlewares/validarJWT');
+const { validarJWT } = require('../middlewares/validarJWT');
 
 const router = new Router();
 
@@ -23,5 +23,19 @@ router.post('/register',[
     validarCampos
 ],register)
 
+router.post('/login',[
+    check('correo','El correo no es valido').isEmail(),
+    check('correo','El correo es obligatorio').not().isEmpty(),
+    check('password','La contraseña es obligatoria').not().isEmpty(),
+    validarCampos
+],login)
+
+router.put('/user/ban/:id',[
+    validarJWT,
+    param('id','El ID no puede estar vacio').not().isEmpty(),
+    param('id', 'No es un ID valido').isMongoId(),
+    param('id').custom(verifyUserId),
+    validarCampos
+],banearUsuario)
 
 module.exports = router;
