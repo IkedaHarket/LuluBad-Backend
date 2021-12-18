@@ -7,12 +7,20 @@
 const Usuario = require("../models/usuario");
 
 
-const verificarCorreoUsuario = async(correo)=>{
+const verifyEmailReg = async(correo)=>{
     const existeCorreo = await Usuario.findOne({correo});
     if(existeCorreo){
         throw new Error(`Este correo ya se encuentra registrado`);
     }
 }
+
+const verifyEmailNoReg = async(correo)=>{
+    const existeCorreo = await Usuario.findOne({correo});
+    if(!existeCorreo){
+        throw new Error(`Este correo no se encuentra registrado`);
+    }
+}
+
 const verifyUserId = async(id) =>{
     const userId = await Usuario.findById(id);
     if(!userId){
@@ -22,6 +30,7 @@ const verifyUserId = async(id) =>{
 
 
 module.exports = {
-    verificarCorreoUsuario,
+    verifyEmailReg,
+    verifyEmailNoReg,
     verifyUserId,
 }

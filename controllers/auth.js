@@ -1,11 +1,9 @@
 /*
-    Controlador de usuario y autenticación
+    Controlador de autenticación
 */
-
 const bcryptjs = require('bcryptjs');
 const { generarJWT } = require('../helpers/generarJWT');
 const Usuario = require("../models/usuario");
-
 
 
 const register = async(req,res) =>{
@@ -39,12 +37,7 @@ const login = async(req,res) =>{
     const {correo,password} = req.body;
     try {
         const usuario = await Usuario.findOne({correo})
-        if(!usuario.estado){
-            return res.status(400).json({
-                ok:false,
-                errors:[{msg:"Este usuario se encuentra deshabilitado"}]
-            })
-        }
+        
         if(!usuario){
             return res.status(400).json({
                 ok:false,
@@ -56,6 +49,12 @@ const login = async(req,res) =>{
             return res.status(400).json({
                 ok:false,
                 errors:[{msg:"Usuario o contraseña incorrectos"}]
+            })
+        }
+        if(!usuario.estado){
+            return res.status(400).json({
+                ok:false,
+                errors:[{msg:"Este usuario se encuentra deshabilitado"}]
             })
         }
         // console.log(usuario.id)
@@ -74,37 +73,10 @@ const login = async(req,res) =>{
         })
     }
 }
-const banearUsuario = async(req,res) =>{
-    try {
-        const {id} = req.params;
-
-        //* Comprobar si usuario es administrador
-        if(!req.usuario.admin){
-            return res.status(401).json({
-                ok:false,
-                msg:"Usted no tiene permitido hacer esto"
-            })
-        }
-
-        const {estado} = await Usuario.findById(id);
-        const usuario = await Usuario.findByIdAndUpdate(id,{estado:!estado},{new:true});
-
-        return res.status(200).json({
-            ok:true,
-            usuario
-        })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            msg:"Error Interno del servidor"
-        })
-    }
-}
 
 
 
 module.exports = {
     register,
     login,
-    banearUsuario
 }

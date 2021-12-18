@@ -15,7 +15,8 @@ class Server{
         this.port = process.env.PORT;
         this.paths = {
             //Aca van todos los paths a los que se quiera acceder
-            auth:       '/api/auth',
+            auth:   '/api/auth',
+            user:   '/api/user'
         };
         this.conectarDB();
         this.middlewares();
@@ -37,6 +38,7 @@ class Server{
 
     routes(){//Configurar cada path a su ruta correspondiente
         this.app.use(this.paths.auth,       require('../routes/auth'));
+        this.app.use(this.paths.user,       require('../routes/user'));
     }
 
     listen(){//Escucha

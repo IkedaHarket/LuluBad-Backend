@@ -36,6 +36,10 @@ const UsuarioSchema = Schema({
         type:Boolean,
         default:false
     },
+    verify:{
+        type:Boolean,
+        default:false
+    },
     estado:{
         type:Boolean,
         default:true
