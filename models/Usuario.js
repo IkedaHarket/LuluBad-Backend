@@ -3,8 +3,10 @@
 */
 
 const {Schema, model} = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UsuarioSchema = Schema({
+
     nombre:{
         type:String,
         required:[true, 'El nombre es obligatorio'],
@@ -50,6 +52,8 @@ const UsuarioSchema = Schema({
     },
     created_at: { type: Date, required: true, default: Date.now }
 });
+
+UsuarioSchema.plugin(mongoosePaginate);
 
 UsuarioSchema.methods.toJSON = function(){
     let {__v,password,_id, ...usuario} = this.toObject();

@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { param, check } = require('express-validator');
-const { forgotPass, banearUsuario, modifyUsers } = require('../controllers/user');
+const { forgotPass, banearUsuario, modifyUsers, getUsers,getUser, deleteUser } = require('../controllers/user');
 const { verifyUserId, verifyEmailNoReg, verifyEmailReg } = require('../helpers/verifyUsers');
 
 
@@ -8,6 +8,15 @@ const {validarCampos} = require('../middlewares/validarCampos');
 const { validarJWT } = require('../middlewares/validarJWT');
 
 const router = new Router();
+
+router.get('/',getUsers)
+
+router.get('/:id',[
+    param('id','El ID no puede estar vacio').not().isEmpty(),
+    param('id', 'No es un ID valido').isMongoId(),
+    param('id').custom(verifyUserId),
+    validarCampos
+],getUser)
 
 
 router.post('/forgot',[
@@ -38,5 +47,13 @@ router.put('/modify',[
     check('edad','La edad es obligatoria').not().isEmpty(),
     validarCampos
 ],modifyUsers)
+
+router.delete('/:id',[
+    validarJWT,
+    param('id','El ID no puede estar vacio').not().isEmpty(),
+    param('id', 'No es un ID valido').isMongoId(),
+    param('id').custom(verifyUserId),
+    validarCampos
+],deleteUser)
 
 module.exports = router;

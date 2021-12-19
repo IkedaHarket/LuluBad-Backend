@@ -8,6 +8,41 @@ const { transporter } = require("../helpers/sendCorreo");
 const bcryptjs = require('bcryptjs');
 
 
+const getUsers = async(req,res)=>{
+    try {
+
+        const options = {
+            page:   req.query.page  || 1,
+            limit:  req.query.limit || 10,
+        }
+
+        const users = await Usuario.paginate({},options);
+
+        return res.status(200).json(users)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg:"Error interno del servidor",
+            desc:"Error controllers/user/getUsers"
+        })
+    }
+}
+const getUser = async(req,res) =>{
+    try {
+        const {id} = req.params;
+        const user = await Usuario.findById(id); 
+        
+        return res.status(200).json({
+            user
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg:"Error interno del servidor",
+            desc:"Error controllers/user/getUser"
+        })
+    }
+}
 const forgotPass = async(req,res) =>{
     try {
         const {correo} = req.body
@@ -32,14 +67,14 @@ const forgotPass = async(req,res) =>{
     } catch (error) {
         console.log(error)
         return res.status(500).json({
-            msg:"Error Interno del servidor"
+            msg:"Error Interno del servidor",
+            desc:"Error controllers/user/forgotPass"
         })
     }
 }
 const banearUsuario = async(req,res) =>{
     try {
         const {id} = req.params;
-
         //* Comprobar si usuario es administrador
         if(!req.usuario.admin){
             return res.status(401).json({
@@ -58,7 +93,8 @@ const banearUsuario = async(req,res) =>{
     } catch (error) {
         console.log(error)
         return res.status(500).json({
-            msg:"Error Interno del servidor"
+            msg:"Error Interno del servidor",
+            desc:"Error controllers/user/banearUsuario"
         })
     }
 }
@@ -94,14 +130,49 @@ const modifyUsers = async(req,res) =>{
     } catch (error) {
         console.log(error)
         return res.status(500).json({
-            msg:"Error Interno del servidor"
+            msg:"Error Interno del servidor",
+            desc:"Error controllers/user/modifyUsers"
         })
     }
 }
 
+const deleteUser = async(req,res) =>{
+
+    try {
+        const {id} = req.params
+
+        if(req.usuario.id !== id && req.usuario.admin === false){
+            return res.status(401).json({
+                ok:false,
+                msg:"Usted no tiene permitido hacer esto"
+            })
+        }
+
+        if(req.usuario.id === id || req.usuario.admin === true) {
+
+            const usuario = await Usuario.findByIdAndDelete(id)
+
+            return res.status(200).json({
+                ok:true,
+                msg:"Usuario borrado exitosamente",
+                usuario
+            })
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg:"Error Interno del servidor",
+            desc:"Error controllers/user/deleteUser"
+        })
+    }
+}
 
 module.exports = {
+    getUser,
+    getUsers,
     forgotPass,
     banearUsuario,
     modifyUsers,
+    deleteUser,
 }
