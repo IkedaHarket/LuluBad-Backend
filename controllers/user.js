@@ -6,6 +6,7 @@ const { generarJWT } = require('../helpers/generarJWT');
 const Usuario = require("../models/usuario");
 const { transporter } = require("../helpers/sendCorreo");
 const bcryptjs = require('bcryptjs');
+const { verifyUserAdmin } = require('../helpers/verifyUsers');
 
 
 const getUsers = async(req,res)=>{
@@ -75,13 +76,8 @@ const forgotPass = async(req,res) =>{
 const banearUsuario = async(req,res) =>{
     try {
         const {id} = req.params;
-        //* Comprobar si usuario es administrador
-        if(!req.usuario.admin){
-            return res.status(401).json({
-                ok:false,
-                msg:"Usted no tiene permitido hacer esto"
-            })
-        }
+
+        if(verifyUserAdmin(req,res)) return false;
 
         const {estado} = await Usuario.findById(id);
         const usuario = await Usuario.findByIdAndUpdate(id,{estado:!estado},{new:true});
@@ -141,12 +137,7 @@ const deleteUser = async(req,res) =>{
     try {
         const {id} = req.params
 
-        if(req.usuario.id !== id && req.usuario.admin === false){
-            return res.status(401).json({
-                ok:false,
-                msg:"Usted no tiene permitido hacer esto"
-            })
-        }
+        if(verifyUserAdmin(req,res)) return false;
 
         if(req.usuario.id === id || req.usuario.admin === true) {
 

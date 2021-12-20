@@ -50,7 +50,9 @@ const UsuarioSchema = Schema({
         type:Boolean,
         default:false,
     },
-    created_at: { type: Date, required: true, default: Date.now }
+    // created_at: { type: Date, required: true, default: Date.now }
+},{
+    timestamps:true
 });
 
 UsuarioSchema.plugin(mongoosePaginate);

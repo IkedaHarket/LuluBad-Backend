@@ -27,10 +27,18 @@ const verifyUserId = async(id) =>{
         throw new Error(`El id ${id} no existe`);
     }
 }
-
+const verifyUserAdmin = (req,res)=>{
+    if(!req.usuario.admin){
+        return res.status(401).json({
+            ok:false,
+            msg:"Usted no tiene permitido hacer esto"
+        })
+    }
+}
 
 module.exports = {
     verifyEmailReg,
     verifyEmailNoReg,
     verifyUserId,
+    verifyUserAdmin,
 }

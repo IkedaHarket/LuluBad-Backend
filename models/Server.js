@@ -16,7 +16,8 @@ class Server{
         this.paths = {
             //Aca van todos los paths a los que se quiera acceder
             auth:   '/api/auth',
-            user:   '/api/user'
+            user:   '/api/user',
+            nail:   '/api/nail'
         };
         this.conectarDB();
         this.middlewares();
@@ -39,6 +40,7 @@ class Server{
     routes(){//Configurar cada path a su ruta correspondiente
         this.app.use(this.paths.auth,       require('../routes/auth'));
         this.app.use(this.paths.user,       require('../routes/user'));
+        this.app.use(this.paths.nail,       require('../routes/nail'));
     }
 
     listen(){//Escucha
