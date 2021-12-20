@@ -131,7 +131,6 @@ const modifyUsers = async(req,res) =>{
         })
     }
 }
-
 const deleteUser = async(req,res) =>{
 
     try {

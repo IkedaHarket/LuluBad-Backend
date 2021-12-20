@@ -15,9 +15,10 @@ class Server{
         this.port = process.env.PORT;
         this.paths = {
             //Aca van todos los paths a los que se quiera acceder
-            auth:   '/api/auth',
-            user:   '/api/user',
-            nail:   '/api/nail'
+            auth:       '/api/auth',
+            user:       '/api/user',
+            nail:       '/api/nail',
+            nailType:   '/api/nail-type',
         };
         this.conectarDB();
         this.middlewares();
@@ -41,6 +42,7 @@ class Server{
         this.app.use(this.paths.auth,       require('../routes/auth'));
         this.app.use(this.paths.user,       require('../routes/user'));
         this.app.use(this.paths.nail,       require('../routes/nail'));
+        this.app.use(this.paths.nailType,   require('../routes/nailType'));
     }
 
     listen(){//Escucha
