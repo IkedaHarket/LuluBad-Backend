@@ -19,6 +19,7 @@ class Server{
             user:       '/api/user',
             nail:       '/api/nail',
             nailType:   '/api/nail-type',
+            nailShape:   '/api/nail-shape',
         };
         this.conectarDB();
         this.middlewares();
@@ -43,6 +44,7 @@ class Server{
         this.app.use(this.paths.user,       require('../routes/user'));
         this.app.use(this.paths.nail,       require('../routes/nail'));
         this.app.use(this.paths.nailType,   require('../routes/nailType'));
+        this.app.use(this.paths.nailShape,  require('../routes/nailShape'));
     }
 
     listen(){//Escucha

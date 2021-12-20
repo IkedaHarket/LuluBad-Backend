@@ -1,6 +1,7 @@
 
 
 const Nail = require("../models/nail");
+const NailShape = require("../models/nailShape");
 const NailType = require("../models/nailType");
 
 
@@ -18,7 +19,15 @@ const verifyNailTypeId = async(id)=>{
     }
 }
 
+const verifyNailShapeId = async(id)=>{
+    const nailId = await NailShape.findById(id);
+    if(!nailId){
+        throw new Error(`El id ${id} no existe`);
+    }
+}
+
 module.exports = {
     verifyNailId,
-    verifyNailTypeId
+    verifyNailTypeId,
+    verifyNailShapeId
 }
