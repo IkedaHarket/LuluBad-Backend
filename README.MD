@@ -11,6 +11,10 @@ En contruccion...
 /api/auth
 /api/user
 /api/nail
+/api/nail-type
+/api/nail-shape
+/api/nail-service
+/api/shopping-list
 ```
 
 ## Contributing
