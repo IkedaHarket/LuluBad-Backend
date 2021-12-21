@@ -15,11 +15,13 @@ class Server{
         this.port = process.env.PORT;
         this.paths = {
             //Aca van todos los paths a los que se quiera acceder
-            auth:       '/api/auth',
-            user:       '/api/user',
-            nail:       '/api/nail',
-            nailType:   '/api/nail-type',
-            nailShape:   '/api/nail-shape',
+            auth:           '/api/auth',
+            user:           '/api/user',
+            nail:           '/api/nail',
+            nailType:       '/api/nail-type',
+            nailShape:      '/api/nail-shape',
+            nailService:    '/api/nail-service',
+            shoppingList:   '/api/shopping-list',
         };
         this.conectarDB();
         this.middlewares();
@@ -40,11 +42,13 @@ class Server{
     }
 
     routes(){//Configurar cada path a su ruta correspondiente
-        this.app.use(this.paths.auth,       require('../routes/auth'));
-        this.app.use(this.paths.user,       require('../routes/user'));
-        this.app.use(this.paths.nail,       require('../routes/nail'));
-        this.app.use(this.paths.nailType,   require('../routes/nailType'));
-        this.app.use(this.paths.nailShape,  require('../routes/nailShape'));
+        this.app.use(this.paths.auth,           require('../routes/auth'));
+        this.app.use(this.paths.user,           require('../routes/user'));
+        this.app.use(this.paths.nail,           require('../routes/nail'));
+        this.app.use(this.paths.nailType,       require('../routes/nailType'));
+        this.app.use(this.paths.nailShape,      require('../routes/nailShape'));
+        this.app.use(this.paths.nailService,    require('../routes/nailService'));
+        this.app.use(this.paths.shoppingList,   require('../routes/shoppingList'));
     }
 
     listen(){//Escucha
