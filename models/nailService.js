@@ -14,6 +14,13 @@ const NailServiceSchema = Schema({
     estado:{
         type:Boolean,
         default:true
+    },
+    desc:{
+        type:String
+    },
+    precio:{
+        type:String,
+        required:[true, 'El precio es obligatorio'],
     }
 },{
     timestamps:true

@@ -1,8 +1,8 @@
 const {Router} = require('express');
 const { check,param } = require('express-validator');
-const { getNailsServices, getNailService, addNailService, stateNailService, modNailService,deleteNailService } = require('../controllers/nailService');
+const { getProviders, getProvider, addProvider, stateProvider, modProvider,deleteProvider } = require('../controllers/provider');
 
-const { verifyNailServiceId } = require('../helpers/verifyNails');
+const { verifyProviderId } = require('../helpers/verifyProvider');
 
 
 const { validarCampos } = require('../middlewares/validarCampos');
@@ -11,47 +11,49 @@ const { validarJWT } = require('../middlewares/validarJWT');
 
 const router = new Router();
 
-router.get('/',getNailsServices);
+router.get('/',[
+    validarJWT,
+    validarCampos
+],getProviders);
 
 router.get('/:id',[
+    validarJWT,
     param('id','El ID no puede estar vacio').not().isEmpty(),
     param('id', 'No es un ID valido').isMongoId(),
-    param('id').custom(verifyNailServiceId),
+    param('id').custom(verifyProviderId),
     validarCampos
-],getNailService)
+],getProvider)
 
 router.post('/',[
     validarJWT,
     check('nombre','El nombre es obligatorio').not().isEmpty(),
-    check('precio','El precio es obligatorio').not().isEmpty(),
     validarCampos,
-],addNailService)
+],addProvider)
 
 router.put('/state/:id',[
     validarJWT,
     param('id','El ID no puede estar vacio').not().isEmpty(),
     param('id', 'No es un ID valido').isMongoId(),
-    param('id').custom(verifyNailServiceId),
+    param('id').custom(verifyProviderId),
     validarCampos
-],stateNailService)
+],stateProvider)
 
 router.put('/:id',[
     validarJWT,
     param('id','El ID no puede estar vacio').not().isEmpty(),
     param('id', 'No es un ID valido').isMongoId(),
-    param('id').custom(verifyNailServiceId),
+    param('id').custom(verifyProviderId),
     check('nombre','El nombre es obligatorio').not().isEmpty(),
-    check('precio','El precio es obligatorio').not().isEmpty(),
     validarCampos
-],modNailService)
+],modProvider)
 
 router.delete('/:id',[
     validarJWT,
     param('id','El ID no puede estar vacio').not().isEmpty(),
     param('id', 'No es un ID valido').isMongoId(),
-    param('id').custom(verifyNailServiceId),
+    param('id').custom(verifyProviderId),
     validarCampos
-],deleteNailService)
+],deleteProvider)
 
 
 

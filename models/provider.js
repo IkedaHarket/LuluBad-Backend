@@ -4,6 +4,7 @@
 */
 
 const {Schema, model} = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const ProviderSchema = Schema({
     nombre:{
@@ -25,8 +26,14 @@ const ProviderSchema = Schema({
     web:{
         type:String,
     },
-
+    estado:{
+        type:Boolean,
+        default:true
+    }    
+},
+{
+    timestamps:true
 });
-
+ProviderSchema.plugin(mongoosePaginate);
 
 module.exports = model('Provider',ProviderSchema);

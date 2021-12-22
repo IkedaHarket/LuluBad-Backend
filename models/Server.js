@@ -22,6 +22,7 @@ class Server{
             nailShape:      '/api/nail-shape',
             nailService:    '/api/nail-service',
             shoppingList:   '/api/shopping-list',
+            provider:       '/api/provider',
         };
         this.conectarDB();
         this.middlewares();
@@ -49,6 +50,7 @@ class Server{
         this.app.use(this.paths.nailShape,      require('../routes/nailShape'));
         this.app.use(this.paths.nailService,    require('../routes/nailService'));
         this.app.use(this.paths.shoppingList,   require('../routes/shoppingList'));
+        this.app.use(this.paths.provider,       require('../routes/provider'));
     }
 
     listen(){//Escucha
