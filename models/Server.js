@@ -23,8 +23,9 @@ class Server{
             nailService:    '/api/nail-service',
             shoppingList:   '/api/shopping-list',
             provider:       '/api/provider',
-            productBrand:      '/api/product-brand',
-            productCategory:      '/api/product-category',
+            productBrand:   '/api/product-brand',
+            productCategory:'/api/product-category',
+            product:        '/api/product',
         };
         this.conectarDB();
         this.middlewares();
@@ -55,7 +56,8 @@ class Server{
         this.app.use(this.paths.provider,       require('../routes/provider'));
         this.app.use(this.paths.productBrand,   require('../routes/productBrand'));
         this.app.use(this.paths.productCategory,require('../routes/productCategory'));
-        
+        this.app.use(this.paths.product,        require('../routes/product'));
+
     }
 
     listen(){//Escucha

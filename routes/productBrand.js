@@ -2,7 +2,7 @@ const {Router} = require('express');
 const { check,param } = require('express-validator');
 const { getProductBrands, getProductBrand, addProductBrand, stateProductBrand, modProductBrand,deleteProductBrand } = require('../controllers/productBrand');
 
-const { verifyProductBrandId } = require('../helpers/verifyProduct');
+const { verifyProductBrandId,verifyNameBrand } = require('../helpers/verifyProduct');
 
 const { validarCampos } = require('../middlewares/validarCampos');
 const { validarJWT } = require('../middlewares/validarJWT');
@@ -21,6 +21,7 @@ router.get('/:id',[
 router.post('/',[
     validarJWT,
     check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('nombre').custom(verifyNameBrand),
     validarCampos,
 ],addProductBrand)
 
@@ -37,7 +38,7 @@ router.put('/:id',[
     param('id','El ID no puede estar vacio').not().isEmpty(),
     param('id', 'No es un ID valido').isMongoId(),
     param('id').custom(verifyProductBrandId),
-    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('nombre').custom(verifyNameBrand),
     validarCampos
 ],modProductBrand)
 
