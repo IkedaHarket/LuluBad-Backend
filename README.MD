@@ -15,6 +15,10 @@ En contruccion...
 /api/nail-shape
 /api/nail-service
 /api/shopping-list
+/api/provider
+/api/product-brand
+/api/product-category
+/api/product
 ```
 
 ## Contributing

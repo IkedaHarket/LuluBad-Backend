@@ -26,6 +26,7 @@ class Server{
             productBrand:   '/api/product-brand',
             productCategory:'/api/product-category',
             product:        '/api/product',
+            nailTab:        '/api/ficha',
         };
         this.conectarDB();
         this.middlewares();
@@ -57,6 +58,7 @@ class Server{
         this.app.use(this.paths.productBrand,   require('../routes/productBrand'));
         this.app.use(this.paths.productCategory,require('../routes/productCategory'));
         this.app.use(this.paths.product,        require('../routes/product'));
+        this.app.use(this.paths.nailTab,        require('../routes/nailTab'));
 
     }
 

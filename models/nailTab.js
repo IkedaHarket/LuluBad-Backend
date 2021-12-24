@@ -4,11 +4,13 @@
 */
 
 const {Schema, model} = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const NailTabScheme = Schema({
     user:{
         type: Schema.Types.ObjectId,
-        ref:'Usuario'
+        ref:'Usuario',
+        unique:true
     },
     nailType:{
         type: Schema.Types.ObjectId,
@@ -27,7 +29,11 @@ const NailTabScheme = Schema({
     extra:{
         type: String
     },
+},{
+    timestamps:true
 });
 
+
+NailTabScheme.plugin(mongoosePaginate);
 
 module.exports = model('NailTab',NailTabScheme);
