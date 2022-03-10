@@ -108,9 +108,9 @@ const deleteClientService = async(req,res) =>{
         if(verifyUserAdmin(req,res)) return false;
 
         const clientService = await ClientService.findByIdAndDelete(id).populate([
-            { path: 'nail', model: 'Nail'},
-            { path: 'user', model: 'Usuario' },
-            { path: 'nailService', model: 'NailService' },
+            { path: 'marca', model: 'ProductBrand' },
+            { path: 'provider', model: 'Provider' },
+            { path: 'categoria', model: 'ProductCategory' }
         ])
 
         return res.status(200).json({

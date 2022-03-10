@@ -28,7 +28,7 @@ const verifyUserId = async(id) =>{
     }
 }
 const verifyUserAdmin = (req,res)=>{
-    if(!req.usuario.admin){
+    if(!req.usuario?.admin){
         return res.status(401).json({
             ok:false,
             msg:"Usted no tiene permitido hacer esto"
@@ -40,5 +40,5 @@ module.exports = {
     verifyEmailReg,
     verifyEmailNoReg,
     verifyUserId,
-    verifyUserAdmin,
+    verifyUserAdmin
 }

@@ -28,6 +28,8 @@ class Server{
             product:        '/api/product',
             nailTab:        '/api/ficha',
             clientService:  '/api/client-service',
+            appoiment:      '/api/cita',
+            gallery:        '/api/gallery',
         };
         this.conectarDB();
         this.middlewares();
@@ -39,12 +41,14 @@ class Server{
     }
 
     middlewares(){
+        this.app.use(express.urlencoded({ extended: false }))
         //Cors
         this.app.use(cors());
         //Parsear el body
         this.app.use(express.json());
         //Levantar directorio publico
         this.app.use(express.static('public'))
+        this.app.use(express.static('uploads'))
     }
 
     routes(){//Configurar cada path a su ruta correspondiente
@@ -61,6 +65,8 @@ class Server{
         this.app.use(this.paths.product,        require('../routes/product'));
         this.app.use(this.paths.nailTab,        require('../routes/nailTab'));
         this.app.use(this.paths.clientService,  require('../routes/clientService'));
+        this.app.use(this.paths.appoiment,      require('../routes/appoiment'));
+        this.app.use(this.paths.gallery,        require('../routes/gallery'));
 
     }
 
